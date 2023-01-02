@@ -31,7 +31,7 @@ public class ServerObject {
     public ArrayList<Client_itf> getClients(){
         return clients;
     }
-
+//////////Partie à refaire !!
     public void lock_read(Client_itf client){
         switch(lock){
         case 0 : //NL

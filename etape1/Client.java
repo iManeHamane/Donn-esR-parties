@@ -7,7 +7,7 @@ import java.net.*;
 public class Client extends UnicastRemoteObject implements Client_itf {
 
 	private static HashMap<Integer, SharedObject> objects;
-	private static int idClient;
+	//private static int idClient;
 	private static Server_itf server;
 
 	//constructor of the client class
@@ -22,12 +22,12 @@ public class Client extends UnicastRemoteObject implements Client_itf {
 		}
 
 		objects = new HashMap<Integer, SharedObject>();
-		idClient = server.getIdClient();
+		//idClient = server.getIdClient();
 	}
 
-	public int getIdClient(){
-		return idClient;
-	}
+	//public int getIdClient(){
+	//	return idClient;
+	//}
 
 
 ///////////////////////////////////////////////////
