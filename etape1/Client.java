@@ -25,11 +25,6 @@ public class Client extends UnicastRemoteObject implements Client_itf {
 		//idClient = server.getIdClient();
 	}
 
-	//public int getIdClient(){
-	//	return idClient;
-	//}
-
-
 ///////////////////////////////////////////////////
 //         Interface to be used by applications
 ///////////////////////////////////////////////////
@@ -52,12 +47,12 @@ public class Client extends UnicastRemoteObject implements Client_itf {
 		else {
 			System.out.println("Client initialisé avec succès !");
 		}
+		
 	}
 	
 	// lookup in the name server
-	public static SharedObject lookup(String name) throws RemoteException{
+	public static SharedObject lookup(String name) {
 		try{
-
 			// recuperer l'objet
 			int idObject = server.lookup(name);
 			if (idObject != -1){ 
@@ -75,7 +70,7 @@ public class Client extends UnicastRemoteObject implements Client_itf {
 	}		
 	
 	// binding in the name server
-	public static void register(String name, SharedObject so) throws RemoteException{
+	public static void register(String name, SharedObject so){
 		try{
 		server.register(name, so.getIdObject());
 		}
@@ -88,7 +83,7 @@ public class Client extends UnicastRemoteObject implements Client_itf {
 	}
 
 	// creation of a shared object
-	public static SharedObject create(Object o) throws RemoteException {
+	public static SharedObject create(Object o) {
 		try{
 			int i = server.create(o);
 			SharedObject so = new SharedObject(o, i);
@@ -118,7 +113,7 @@ public class Client extends UnicastRemoteObject implements Client_itf {
 	}
 
 	// request a write lock from the server
-	public static Object lock_write (int id) throws RemoteException {
+	public static Object lock_write(int id) throws RemoteException {
 		try{
 				return server.lock_write(id, new Client());
 		}

@@ -14,7 +14,7 @@ public class Irc extends Frame {
 	SharedObject		sentence;
 	static String		myName;
 
-	public static void main(String argv[]) {
+	public static void main(String argv[]){
 		
 		if (argv.length != 1) {
 			System.out.println("java Irc <name>");

@@ -1,8 +1,8 @@
 import java.io.*;
 
 public class SharedObject implements Serializable, SharedObject_itf {
-	private int idObject, idClient;
-    private Object obj; 
+	private int idObject;// idClient;
+    public Object obj; 
 	private static int lock;
 
 	/* lock 
@@ -29,20 +29,20 @@ public class SharedObject implements Serializable, SharedObject_itf {
     }
 
 	//constructor
-	public SharedObject(Object obj, int ido, int idc){
+	public SharedObject(Object obj, int ido){
 		this.obj=obj;
 		this.idObject=ido;
-		this.idClient = idc;
 
 	}
 	
 	// invoked by the user program on the client node
 	public void lock_read() {
+		//si c'est cached, on ne fait pas appel au client
 				synchronized(this){
 					switch(lock){
-						case 0 : 
+						//case 0 : 
 							//etat initial
-							break;
+						//	break;
 						case 1 : 
 							//de cached il devient taken
 							lock =3;
@@ -52,8 +52,6 @@ public class SharedObject implements Serializable, SharedObject_itf {
 							lock=5;
 							break;
 						default : 	
-							//les autres cas sont des cas d'erruer 
-							//car il va etre deja en etat read lock taken
 							break;
 					}
 				}
@@ -75,16 +73,36 @@ public class SharedObject implements Serializable, SharedObject_itf {
 	}
 
 	// invoked by the user program on the client node
-	public void lock_write() {
+	public void lock_write(){
+		synchronized(this){
+			switch(lock){
+				case 0 : 
+					//etat initial
+					break;
+				case 2 : 
+					//de cached il devient taken
+					lock =4;
+					break;
+				case 3 :
+					//de cached il devient read taken et write cached
+					lock=5;
+					break;
+				default : 	
+					break;
+			}
+		}
 	}
 
 	// invoked by the user program on the client node
 	public synchronized void unlock() {
+		lock=0;
+		notify();
 	}
 
 
 	// callback invoked remotely by the server
 	public synchronized Object reduce_lock() {
+		return null;//juste pour le test
 	}
 
 	// callback invoked remotely by the server
@@ -92,5 +110,6 @@ public class SharedObject implements Serializable, SharedObject_itf {
 	}
 
 	public synchronized Object invalidate_writer() {
+		return null; //juste pour le test!
 	}
 }

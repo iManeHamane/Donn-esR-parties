@@ -40,20 +40,21 @@ public class Server extends UnicastRemoteObject implements Server_itf
     public Object lock_read(int id, Client_itf client) throws RemoteException {
         synchronized(objects.get(id)){
             objects.get(id).lock_read(client);
-            return objects.get(id).getCache();
+            return objects.get(id);// a revoir
 
         }
-        return null;
+        
     }
 
     @Override
     public Object lock_write(int id, Client_itf client) throws RemoteException {
         synchronized(objects.get(id)){
-            objects.get(id).lock_write(client);
-            return objects.get(id).getCache();
+            //objects.get(id) renvoie un serverObject
+            objects.get(id).lock_write(client);// a revoir
+            return objects.get(id);// a revoir
             
         }
-        return null;
+       
     }
 
     @Override
@@ -64,9 +65,7 @@ public class Server extends UnicastRemoteObject implements Server_itf
 
     @Override
     public void register(String name, int id) throws RemoteException {
-        names.put(name,id);
-
-        
+        names.put(name,id);    
     }
 
 

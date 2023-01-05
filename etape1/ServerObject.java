@@ -5,7 +5,7 @@ public class ServerObject {
     private Object obj; 
     private ArrayList<Client_itf> clients;
     private int lock; 
-    private Object cache;
+    private Object cache; //apres ca je ss pas comment l'utiliser!
 
 
     public ServerObject(int id, Object obj){
@@ -32,7 +32,14 @@ public class ServerObject {
         return clients;
     }
 //////////Partie à refaire !!
-    public void lock_read(Client_itf client){
+/////////
+/////////
+//////////
+////////////
+/////////////
+/////////////
+
+    public Object lock_read(Client_itf client){
         switch(lock){
         case 0 : //NL
             clients.add(client);
@@ -40,14 +47,28 @@ public class ServerObject {
             clients.add(client);
         case 4 : //WLT
             wait(clients);
-
         }
+        //doit retourner un objet
+        return null;
+
+    }
+    public Object lock_write(Client_itf client){
+        switch(lock){
+            case 0 :
+            case 1 : 
+            case 2 : 
+        }
+        //doit retourner un objet
+        return null;
 
     }
      void wait(ArrayList<Client_itf> cl){
         for( Client_itf c : cl ){
             try{
-                Object o = c.reduce_lock(id,c.getIdClient()); //la methode dans l enoncé n'a qu'un par et moi g besoin de 2
+                Object o = c.reduce_lock(id); //la methode dans l enoncé n'a qu'un par et moi g besoin de 2
+            }
+            catch(Exception e){
+                e.printStackTrace();
             }
         }
      }
